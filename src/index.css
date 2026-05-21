@@ -1,0 +1,314 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  /* Apple Minimalist Light Mode */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f5f5f7;
+  --surface: #ffffff;
+  --surface-hover: rgba(29, 29, 31, 0.02);
+  --border: #e8e8ed;
+  --border-glow: rgba(0, 102, 204, 0.2);
+  --text-primary: #1d1d1f;
+  --text-secondary: #86868b;
+  --accent: #0066cc;
+  --accent-light: rgba(0, 102, 204, 0.08);
+  --accent-glow: rgba(0, 102, 204, 0.3);
+  --danger: #ff3b30;
+  --danger-light: rgba(255, 59, 48, 0.1);
+  --success: #34c759;
+  --success-light: rgba(52, 199, 89, 0.1);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.12);
+  --blur-nav: saturate(180%) blur(20px);
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  
+  /* Font Families */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, SF Pro Text, monospace;
+
+  /* Spring transitions for premium feel */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-smooth: all 0.4s var(--ease-out-expo);
+  --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-spring: all 0.5s cubic-bezier(0.25, 1, 0.5, 1.15);
+}
+
+[data-theme='dark'] {
+  /* Apple Pro Dark Mode */
+  --bg-primary: #000000;
+  --bg-secondary: #121212;
+  --surface: #1d1d1f;
+  --surface-hover: rgba(255, 255, 255, 0.04);
+  --border: #333336;
+  --border-glow: rgba(41, 151, 255, 0.3);
+  --text-primary: #f5f5f7;
+  --text-secondary: #86868b;
+  --accent: #2997ff;
+  --accent-light: rgba(41, 151, 255, 0.12);
+  --accent-glow: rgba(41, 151, 255, 0.4);
+  --danger: #ff453a;
+  --danger-light: rgba(255, 69, 58, 0.15);
+  --success: #30d158;
+  --success-light: rgba(48, 209, 88, 0.15);
+  --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 10px 40px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 30px 60px rgba(0, 0, 0, 0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.5;
+  overflow-x: hidden;
+  transition: background-color 0.5s var(--ease-out-expo), color 0.3s ease;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+/* Layout Utilities */
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+  box-sizing: border-box;
+}
+
+/* Grid layout for catalog */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+  padding: 24px 0;
+}
+
+@media (max-width: 768px) {
+  .product-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+    padding: 16px 0;
+  }
+}
+
+/* High-Tech Laser Border Trace Effect */
+.laser-card {
+  position: relative;
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  transition: var(--transition-spring);
+}
+
+.laser-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-md);
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    transparent 40%,
+    var(--accent),
+    transparent 60%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  background-size: 200% 200%;
+  background-position: 0% 0%;
+}
+
+.laser-card:hover {
+  transform: translateY(-6px);
+  border-color: transparent;
+  box-shadow: var(--shadow-md), 0 0 15px var(--accent-light);
+}
+
+.laser-card:hover::after {
+  opacity: 1;
+  animation: laser-sweep 2s linear infinite;
+}
+
+@keyframes laser-sweep {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+/* Focus Blur effect for camera-style product previews */
+.lens-zoom-container {
+  overflow: hidden;
+  position: relative;
+  background-color: var(--bg-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lens-zoom-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: blur(0px) contrast(1);
+  transform: scale(1);
+  transition: filter 0.6s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+}
+
+.laser-card:hover .lens-zoom-image {
+  transform: scale(1.05);
+  filter: blur(0.5px) contrast(1.02);
+}
+
+/* High-tech glow and connection lines */
+.tech-connector {
+  position: relative;
+}
+
+.tech-connector::before {
+  content: '';
+  position: absolute;
+  background: linear-gradient(to right, var(--accent), transparent);
+  height: 1px;
+  width: 60px;
+  top: 50%;
+  left: -70px;
+  opacity: 0.5;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.6s var(--ease-out-expo);
+}
+
+.tech-connector:hover::before {
+  transform: scaleX(1);
+}
+
+/* Smooth high-tech button (magnetic ripple simulator) */
+.btn-magnetic {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  color: #ffffff;
+  background: var(--text-primary);
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  overflow: hidden;
+  transition: var(--transition-smooth);
+}
+
+.btn-magnetic::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--accent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+
+.btn-magnetic:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px var(--accent-light);
+}
+
+.btn-magnetic:hover::before {
+  opacity: 0.15;
+}
+
+.btn-magnetic > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* Confetti animation */
+@keyframes confetti-pop {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-200px) scale(0.5);
+    opacity: 0;
+  }
+}
+
+.success-badge-pulse {
+  animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(48, 209, 88, 0.4);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 12px rgba(48, 209, 88, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(48, 209, 88, 0);
+  }
+}
+
+/* Icon Sizing Utilities */
+.w-3 { width: 12px; }
+.h-3 { height: 12px; }
+.w-4 { width: 16px; }
+.h-4 { height: 16px; }
+.w-5 { width: 20px; }
+.h-5 { height: 20px; }
+.w-6 { width: 24px; }
+.h-6 { height: 24px; }
+
