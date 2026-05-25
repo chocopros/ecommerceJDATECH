@@ -6,11 +6,13 @@ import ProductDetailModal from './components/ProductDetailModal';
 import CartDrawer from './components/CartDrawer';
 import CheckoutModal from './components/CheckoutModal';
 import InstallationsGuide from './components/InstallationsGuide';
+import TechnicalSupport from './components/TechnicalSupport';
 import { products } from './data/products';
 import { ShieldCheckIcon, TruckIcon, ZapIcon, WhatsAppIcon } from './components/Icons';
 
 const categoryTitles = {
   all: 'Explorar Tecnología',
+  support: 'Soporte Técnico',
   computing: 'Computación',
   gaming: 'Gaming',
   licenses: 'Licencias',
@@ -18,7 +20,7 @@ const categoryTitles = {
 };
 
 export default function App() {
-  const [activeCategory, setActiveCategory] = useState('all');
+  const [activeCategory, setActiveCategory] = useState('support');
   const [searchQuery, setSearchQuery] = useState('');
   const [cartItems, setCartItems] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -111,8 +113,6 @@ export default function App() {
       <Navbar
         activeCategory={activeCategory}
         setActiveCategory={setActiveCategory}
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
         cartCount={cartItems.reduce((acc, item) => acc + item.quantity, 0)}
         onCartOpen={() => setIsCartOpen(true)}
         theme={theme}
@@ -129,7 +129,9 @@ export default function App() {
       )}
 
       <main className="container" style={{ flexGrow: 1, padding: '60px 24px' }}>
-        {activeCategory === 'installations' ? (
+        {activeCategory === 'support' ? (
+          <TechnicalSupport />
+        ) : activeCategory === 'installations' ? (
           <InstallationsGuide />
         ) : (
           <>

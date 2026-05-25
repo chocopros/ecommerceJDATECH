@@ -1,17 +1,14 @@
 import { useState, useEffect } from 'react';
-import { SearchIcon, ShoppingBagIcon, SunIcon, MoonIcon } from './Icons';
+import { ShoppingBagIcon, SunIcon, MoonIcon } from './Icons';
 
 export default function Navbar({
   activeCategory,
   setActiveCategory,
-  searchQuery,
-  setSearchQuery,
   cartCount,
   onCartOpen,
   theme,
   toggleTheme
 }) {
-  const [searchFocused, setSearchFocused] = useState(false);
   const [showNavbar, setShowNavbar] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
 
@@ -34,6 +31,7 @@ export default function Navbar({
 
   const categories = [
     { id: 'all', label: 'Todo' },
+    { id: 'support', label: 'Soporte Técnico' },
     { id: 'computing', label: 'Computación' },
     { id: 'gaming', label: 'Gaming' },
     { id: 'licenses', label: 'Licencias' },
@@ -61,7 +59,8 @@ export default function Navbar({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        height: '64px'
+        height: '64px',
+        padding: '0 16px'
       }}>
         {/* Logo and Brand */}
         <div 
@@ -156,49 +155,12 @@ export default function Navbar({
           })}
         </nav>
 
-        {/* Search, Theme, Cart Actions */}
+        {/* Theme, Cart Actions */}
         <div style={{
           display: 'flex',
           alignItems: 'center',
           gap: '16px'
         }}>
-          {/* Expanding Search Bar */}
-          <div style={{
-            position: 'relative',
-            display: 'flex',
-            alignItems: 'center'
-          }}>
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              backgroundColor: 'var(--bg-secondary)',
-              border: `1px solid ${searchFocused ? 'var(--accent)' : 'var(--border)'}`,
-              borderRadius: '20px',
-              padding: '6px 12px',
-              transition: 'var(--transition-smooth)',
-              width: searchFocused ? '200px' : '130px',
-              boxShadow: searchFocused ? '0 0 10px var(--accent-light)' : 'none'
-            }}>
-              <SearchIcon className="w-4 h-4" style={{ color: 'var(--text-secondary)', marginRight: '6px' }} />
-              <input
-                type="text"
-                placeholder="Buscar..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                onFocus={() => setSearchFocused(true)}
-                onBlur={() => setSearchFocused(false)}
-                style={{
-                  border: 'none',
-                  background: 'transparent',
-                  outline: 'none',
-                  fontSize: '13px',
-                  color: 'var(--text-primary)',
-                  width: '100%'
-                }}
-              />
-            </div>
-          </div>
-
           {/* Theme Selector */}
           <button
             onClick={toggleTheme}
